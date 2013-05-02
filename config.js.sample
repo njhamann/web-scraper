@@ -1,0 +1,6 @@
+var account = {
+    email: 'YOUR EMAIL',
+    password: 'YOUR PASSWORD'
+};
+
+exports.account = account;
