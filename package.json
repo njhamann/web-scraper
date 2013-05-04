@@ -4,6 +4,7 @@
   "description": "scrapping application",
   "main": "scrapper.js",
   "dependencies": {
+    "ejs": "*",
     "request": "~2.21.0",
     "jsdom": "~0.6.0",
     "cron": "~1.0.1",

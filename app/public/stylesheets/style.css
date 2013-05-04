@@ -1,8 +1,28 @@
 body {
-  padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+    margin:0;
+    overflow-y:scroll;
+    background-color:#f5f5f5;
 }
-
 a {
   color: #00B7FF;
+}
+
+text {
+  font: 12px sans-serif;
+}
+.container{
+    background-color:#fff;
+}
+.graph-container{
+    margin:0 20px;
+}
+.graph-container svg {
+  height: 400px;
+  min-width: 100px;
+  min-height: 100px;
+/*
+  Minimum height and width is a good idea to prevent negative SVG dimensions...
+  For example width should be =< margin.left + margin.right + 1,
+  of course 1 pixel for the entire chart would not be very useful, BUT should not have errors
+*/
 }
