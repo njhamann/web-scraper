@@ -12,6 +12,23 @@ text {
 }
 .container{
     background-color:#fff;
+    position:relative;
+}
+.background-stripes{
+    width:100%;
+    position:absolute;
+    top:0;
+    left:0;
+    height:200px;
+    background:#FFF;
+}
+.background-stripes .dark-stripe{
+    width:100%;
+    position:absolute;
+    top:50px;
+    left:0;
+    height:150px;
+    background:#666;
 }
 .graph-container{
     margin:0 20px;
@@ -20,9 +37,4 @@ text {
   height: 400px;
   min-width: 100px;
   min-height: 100px;
-/*
-  Minimum height and width is a good idea to prevent negative SVG dimensions...
-  For example width should be =< margin.left + margin.right + 1,
-  of course 1 pixel for the entire chart would not be very useful, BUT should not have errors
-*/
 }

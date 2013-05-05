@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <link href="/stylesheets/libs/bootstrap.min.css" rel="stylesheet" type="text/css">
+    <link href="/stylesheets/libs/nv.d3.css" rel="stylesheet" type="text/css">
+    <link href="/stylesheets/style.css" rel="stylesheet" type="text/css">
+</head>
+<body>
+    <%- body -%>
+
+    <script>
+        var top_stats = <%- JSON.stringify(data) %>;
+    </script>
+    <script src="/javascripts/libs/angular.min.js"></script>
+    <script src="/javascripts/libs/jquery-2.0.0.min.js"></script>
+    <script src="/javascripts/libs/d3.v2.js"></script>
+    <script src="/javascripts/libs/nv.d3.js"></script>
+    <script src="/javascripts/libs/bootstrap.min.js"></script>
+    <script src="/javascripts/core.js"></script>
+</body>
+</html>
