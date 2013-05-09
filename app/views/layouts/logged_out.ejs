@@ -7,11 +7,14 @@
     <link href="/stylesheets/style.css" rel="stylesheet" type="text/css">
 </head>
 <body>
+    <div class="background-stripes">
+        <div class="dark-stripe">
+        </div>
+    </div>
+    <% include ../partials/logged_out_header %>
+    
     <%- body -%>
 
-    <script>
-        var top_stats = <%- JSON.stringify(data) %>;
-    </script>
     <script src="/javascripts/libs/angular.min.js"></script>
     <script src="/javascripts/libs/jquery-2.0.0.min.js"></script>
     <script src="/javascripts/libs/d3.v2.js"></script>

@@ -34,7 +34,7 @@ userSchema.methods.comparePassword = function(candidatePassword, cb) {
 
 // Seed a user
 var User = mongoose.model('User', userSchema);
-var user = new User({ username: 'njhamann', email: 'njhamann@gmail.com', password: 'snow2Night' });
+var user = new User({ username: 'noah', email: 'noah@socialflow.com', password: 'snow2Night' });
 
 user.save(function(err) {
     if(err) {

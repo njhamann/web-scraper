@@ -93,12 +93,13 @@ if ('development' == app.get('env')) {
 //var TopStatsModel = require('./models/top_stats').TopStats;
 //var topStatsModel = new TopStatsModel('localhost', 27017);
 var TopStatModel = require('./models/top_stat');
+var NoteModel = require('./models/note');
 var UserModel = require('./models/user');
 
 //routes
-require('./routes/index')(app, TopStatModel, passport);
+require('./routes/index')(app, TopStatModel, UserModel, passport);
 require('./routes/api')(app, TopStatModel);
-require('./routes/account')(app, TopStatModel, ensureAuthenticated);
+require('./routes/account')(app, TopStatModel, NoteModel, ensureAuthenticated);
 
 http.createServer(app).listen(app.get('port'), function(){
     console.log('Express server listening on port ' + app.get('port'));

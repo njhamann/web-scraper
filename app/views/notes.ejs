@@ -1,0 +1,12 @@
+<% layout('layouts/logged_in') -%>
+    <div class="container content">
+        <div class="graph-container">
+            <h2>Note Distribution</h2>
+            <div id="note_distribution_graph"><svg></svg></div>
+            <div id="note_distribution_graph2"><svg></svg></div>
+        </div>
+    </div>
+    <script>
+        var notes = <%- JSON.stringify(data) %>;
+    </script>
+    <% script('/javascripts/notes.js') -%>

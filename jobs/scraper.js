@@ -4,6 +4,7 @@ var request = require('request');
 var jsdom = require("jsdom");
 var mongodb = require('mongodb');
 var moment = require('moment');
+var fs = require('fs');
 
 // request functions
 function getPage(){
@@ -14,6 +15,29 @@ function getPage(){
         login_password: config.account.password
     }}, function(err, resp, body){
         if (!err) {
+            /*
+            https://www.lendingclub.com/account/loanDetail.action?loan_id=4436017 
+            request.post('https://www.lendingclub.com/account/loansAj.action', {form:{
+                sortBy:'nextPayment',
+                dir:'desc',
+                startindex:0,
+                pagesize:10000,
+                namespace:'/account',
+                r:0.4541655050124973,
+                join_criteria:'all',
+                status_criteria:'Late_All'
+            }}, function(err, resp, body){
+                if (!err) {
+                    fs.writeFile("./scrapper.log", body, function(err) {
+                        if(err) {
+                            console.log(err);
+                        } else {
+                            console.log("The file was saved!");
+                        }
+                    });
+                };
+            });
+            */ 
             
             request('https://www.lendingclub.com/account/summary.action', function(err, response, body){
                 if (!err && response.statusCode == 200) {
@@ -40,8 +64,9 @@ function parseJSON(json){
     rawData.data = objKeysToUnderscore(rawData.data);
     rawData.time = moment().unix();
     rawData.data = cleanData(rawData.data);
-    insertData(rawData, 'raw_notes_summary');
-    toTimeseriesData(rawData, 'day_interval_notes_summary', insertData);
+    insertData(rawData, 'raw_notes');
+    toTimeseriesData(rawData, 'hour_interval_notes', 'hour', insertData);
+    toTimeseriesData(rawData, 'day_interval_notes', 'day', insertData);
 };
 
 function parseDom(body){
@@ -51,7 +76,8 @@ function parseDom(body){
         rawData.data = cleanData(rawData.data);
         rawData.time = moment().unix();
         insertData(rawData, 'raw_top_stats');
-        toTimeseriesData(rawData, 'day_interval_top_stats', insertData);
+        toTimeseriesData(rawData, 'hour_interval_top_stats', 'hour', insertData);
+        toTimeseriesData(rawData, 'day_interval_top_stats', 'day', insertData);
     }); 
 };
 
@@ -61,35 +87,26 @@ function extractData(window){
     rawData.net_annualized_return = $.trim( $('.main-module .box-module:eq(0) label:eq(1) span').text() );
     rawData.interest_received = $.trim( $('.main-module .box-module:eq(1) label:eq(1) span').text() );
     rawData.account_total = $.trim( $('.main-module .box-module:eq(2) label:eq(1) span').text() );
+    rawData.principal_received = $.trim( $('#paymentBox .account-detail-line:eq(1) span').text() );
     return rawData;
 };
 
-function toTimeseriesData(rawData, collectionName, callback){
-    /*
-        format:
+function toTimeseriesData(rawData, collectionName, type, callback){
 
-        {
-            time: [value]
-            [metric key]: {
-                sum: [value],
-                count: [value]
-            },
-            [metric key]: {
-                sum: [value],
-                count: [value]
-            }
-        }
-
-    */
-
-    var today_unix = moment().startOf('hour').unix();
-    var yesterday_unix = moment.unix(today_unix).subtract('hours', 1).unix();
+    if(type == 'hour'){
+        var current_unix = moment().startOf('hour').unix();
+        var previous_unix = moment.unix(current_unix).subtract('hours', 1).unix();
+    }else if(type == 'day'){
+        var current_unix = moment().startOf('day').unix();
+        var previous_unix = moment.unix(current_unix).subtract('days', 1).unix();
+    }
     
     function convertData(last, curr){
         var d = {};
         for(var key in curr){
             if(key != '_id'){         
                 var lastVal = curr[key];
+                lastVal = lastVal || 0;
                 if(last && last[key]){
                     lastVal = last[key].sum; 
                 }
@@ -116,7 +133,7 @@ function toTimeseriesData(rawData, collectionName, callback){
             }
             var timeData = {};
             timeData.data = convertData(resp.data, rawData.data); 
-            timeData.time = today_unix;
+            timeData.time = current_unix;
             callback(timeData, collectionName);
             server.close();
 

@@ -1,40 +1,67 @@
 body {
-    margin:0;
-    overflow-y:scroll;
-    background-color:#f5f5f5;
-}
+  margin: 0;
+  overflow-y: scroll;
+  background-color: #f5f5f5; }
+
 a {
-  color: #00B7FF;
-}
+  color: #00B7FF; }
 
 text {
-  font: 12px sans-serif;
-}
-.container{
-    background-color:#fff;
-    position:relative;
-}
-.background-stripes{
-    width:100%;
-    position:absolute;
-    top:0;
-    left:0;
-    height:200px;
-    background:#FFF;
-}
-.background-stripes .dark-stripe{
-    width:100%;
-    position:absolute;
-    top:50px;
-    left:0;
-    height:150px;
-    background:#666;
-}
-.graph-container{
-    margin:0 20px;
-}
+  font: 12px sans-serif; }
+
+.container {
+  position: relative; }
+  .container.header {
+    height: 50px; }
+    .container.header h1 {
+      font-size: 22px;
+      line-height: 22px;
+      font-weight: normal;
+      color: #999;
+      float: left; }
+    .container.header ul li {
+      float: left;
+      margin: 10px 0 0 10px; }
+  .container.navigation {
+    height: 150px; }
+    .container.navigation ul li {
+      float: left;
+      margin: 25px 25px 0 0; }
+      .container.navigation ul li a {
+        display: block;
+        width: 100px;
+        height: 100px;
+        background: #666;
+        border-radius: 5px;
+        color: #FFF;
+        box-sizing: border-box;
+        padding-top: 35px;
+        text-align: center;
+        font-size: 17px; }
+        .container.navigation ul li a:hover {
+          background: #999; }
+  .container.content {
+    background: #FFF; }
+
+.background-stripes {
+  width: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 200px;
+  background: #FFF; }
+  .background-stripes .dark-stripe {
+    width: 100%;
+    position: absolute;
+    top: 50px;
+    left: 0;
+    height: 150px;
+    background: #666; }
+
+.graph-container {
+  margin: 0 20px; }
+
 .graph-container svg {
   height: 400px;
   min-width: 100px;
-  min-height: 100px;
-}
+  min-height: 100px; }

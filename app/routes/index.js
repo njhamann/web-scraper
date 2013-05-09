@@ -2,7 +2,7 @@
  * GET home page.
  */
 
-module.exports = function(app, TopStatModel, passport){
+module.exports = function(app, TopStatModel, UserModel, passport){
     
     app.get('/', function(req, res){
         var params = {type: 'hourly', count: 24}; 
@@ -34,5 +34,24 @@ module.exports = function(app, TopStatModel, passport){
     app.get('/logout', function(req, res){
         req.logout();
         res.redirect('/');
+    });
+    
+    app.get('/signup', function(req, res){
+        res.render('signup');
+    });
+    
+    app.post('/signup', function(req, res){
+        var user = new UserModel(req.body);
+        user.email = req.body.username;
+        user.save(function (err) {
+            if (err) {
+                console.log(err);
+                return res.render('signup', { errors: err.errors, user: user });
+            }
+            req.logIn(user, function(err) {
+                if (err) return next(err);
+                return res.redirect('/account');
+            });
+        });
     });
 };

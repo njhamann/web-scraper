@@ -21,12 +21,11 @@ var dailyTopStatsSchema = new Schema({
 
 dailyTopStatsSchema.methods = {
     findAll: function(params, callback){
-        this.model('day_interval_top_stat').find()
+        this.model('hour_interval_top_stat').find()
           .sort({time: -1})
           .limit(parseInt(params.count || 24))
           .exec(callback);
     }
 };
 
-module.exports = mongoose.model('day_interval_top_stat', dailyTopStatsSchema);
-
+module.exports = mongoose.model('hour_interval_top_stat', dailyTopStatsSchema);
